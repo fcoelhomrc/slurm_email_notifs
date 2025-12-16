@@ -1,3 +1,9 @@
+# Installation
+
+Simply `git clone` this repo to your remote server and run `uv sync`. 
+
+# Usage 
+
 Create a `.env` file in your `$HOME` directory, with the following:
 
 ```
