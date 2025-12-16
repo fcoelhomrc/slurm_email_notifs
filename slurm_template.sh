@@ -18,6 +18,8 @@ application=""
 # Options to pass
 options=""
 
+# ======== Do not change below this line ========
+
 SUBMIT_TIME=${SLURM_SUBMIT_TIME:-$(squeue -j $SLURM_JOB_ID -h -o "%V" | xargs -I{} date -d {} +%s 2>/dev/null || date +%s)}
 START_TIME=$(date +%s.%N)
 
