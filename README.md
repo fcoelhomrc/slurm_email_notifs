@@ -16,3 +16,5 @@ SLURM_EMAIL_TO=<insert target email>
 ```
 
 Do youself a favor and DO NOT push your `.env` files to a public repo.
+
+Copy the `slurm_template.sh` and modify it to run your jobs. It should notify you when your job starts (and report time spent in queue), and when your job finishes (and report exit code and time spent in job).
