@@ -5,19 +5,24 @@
 #SBATCH --job-name=JobName            # Job name
 #SBATCH -o slurm_%x.%j.out            # File containing STDOUT output
 
+# ======== Do not change ========
+SLURM_EMAIL_NOTIFS_PATH="$HOME/utils/slurm_email_notifs"
+
+# Email notification setup
+notify_cmd="uv run --project $SLURM_EMAIL_NOTIFS_PATH slurm-notify"
+# ===============================
+
 # Command to run
 application=""
 
 # Options to pass
 options=""
 
-# Email notification setup
-# Record submit time (passed from sbatch wrapper or use job submit time from squeue)
 SUBMIT_TIME=${SLURM_SUBMIT_TIME:-$(squeue -j $SLURM_JOB_ID -h -o "%V" | xargs -I{} date -d {} +%s 2>/dev/null || date +%s)}
 START_TIME=$(date +%s.%N)
 
 # Send start notification
-slurm-notify start \
+$notify_cmd start \
     --job-id "$SLURM_JOB_ID" \
     --job-name "$SLURM_JOB_NAME" \
     --submit-time "$SUBMIT_TIME" || true
@@ -27,7 +32,7 @@ $application $options
 EXIT_CODE=$?
 
 # Send finish notification
-slurm-notify finish \
+$notify_cmd finish \
     --job-id "$SLURM_JOB_ID" \
     --job-name "$SLURM_JOB_NAME" \
     --start-time "$START_TIME" \
